@@ -20,7 +20,7 @@ class Contact extends Component{
                 telnum: false,
                 email: false
             }
-        }
+        };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -76,6 +76,12 @@ class Contact extends Component{
         
         return errors;
     }
+    handleBlur = (field) => (evt) => {
+        this.setState({
+          touched: { ...this.state.touched, [field]: true },
+        });
+    }
+    
 
     render(){
         const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
