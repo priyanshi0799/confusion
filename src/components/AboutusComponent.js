@@ -1,10 +1,12 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent'
+import { baseUrl } from '../shared/baseUrl';
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <RenderLeader leader={leader}></RenderLeader>
             // <p>Leader {leader.name}</p>
@@ -17,7 +19,7 @@ function RenderLeader({leader}){
         <div className="col-12 mt-5">
             <Media tag="li">
                 <Media left middle>
-                    <Media object src={leader.image} alt={leader.name}></Media>
+                    <Media object src={baseUrl + leader.image} alt={leader.name}></Media>
                 </Media>
                 <Media body className="ml-5">
                 <Media heading>{leader.name}</Media>
@@ -30,17 +32,40 @@ function RenderLeader({leader}){
 
 }
 
-    return(
-        <div className="container">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>About Us</BreadcrumbItem>
-                </Breadcrumb>
-                <div className="col-12">
-                    <h3>About Us</h3>
-                    <hr />
-                </div>                
+    if(props.isLoading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <Loading />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    else if(props.errMess){
+        return(
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+else if(props.leaders !=null){
+  return(
+    <div className="container">
+        <div className="row">
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                <BreadcrumbItem active>About Us</BreadcrumbItem>
+            </Breadcrumb>
+            <div className="col-12">
+                <h3>About Us</h3>
+                <hr />
+            </div>                
             </div>
             <div className="row row-content">
                 <div className="col-12 col-md-6">
@@ -92,6 +117,7 @@ function RenderLeader({leader}){
             </div>
         </div>
     );
-    }
+}
+}
 
 export default About;    
