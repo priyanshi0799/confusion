@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl';
+import { Stagger } from 'react-animation-components';
 
 function About(props) {
 
@@ -32,7 +33,7 @@ function RenderLeader({leader}){
 
 }
 
-    if(props.isLoading){
+    if(props.leaders.isLoading){
         return(
             <div className="container">
                 <div className="row">
@@ -43,7 +44,7 @@ function RenderLeader({leader}){
             </div>
         )
     }
-    else if(props.errMess){
+    else if(props.leaders.errMess){
         return(
             <div className="container">
                 <div className="row">
@@ -110,9 +111,11 @@ else if(props.leaders !=null){
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    <Media list>
-                        {leaders}
-                    </Media>
+                    <Stagger in>
+                        <Media list>
+                            {leaders}
+                        </Media>
+                    </Stagger>
                 </div>
             </div>
         </div>

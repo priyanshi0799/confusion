@@ -41,9 +41,51 @@ export const postComment = (dishId, rating, author, comment) =>(dispatch)=>{
             throw errmess;
         })
         .then(response => response.json())
-        .then(response => dispatch(addComment(response)))
+        .then(response => dispatch(postComment(response)))
         .catch(error => { console.log('Post comments', error.message)
               alert('Your comment could not be posted\n Error: '+ error.message)})
+    }
+
+    export const postFeedback = ({firstname, lastname, tel, email, agree, contactType, feedback}) => (dispatch)=>{
+        const newFeedback ={
+            firstname: firstname,
+            lastname: lastname,
+            tel: tel,
+            email: email,
+            agree: agree,
+            contactType: contactType,
+            feedback: feedback
+        }
+
+        return fetch(baseUrl + 'feedback', {
+            method: 'POST',
+            body: JSON.stringify(newFeedback),
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+
+        .then(response=>{
+            if(response.ok){
+                return response;
+            }
+            else{
+                var error = new Error('Error '+ response.status + ': '+ response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error =>{
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(response => {dispatch(postFeedback(response));
+                alert("ThankYou "+JSON.stringify(response));
+            })
+        .catch(error => { console.log('Post comments', error.message)
+            alert('Your feedback could not be posted\n Error: '+ error.message)})
     }
 
 //Thunk
