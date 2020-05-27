@@ -6,7 +6,7 @@ export const addComment = (comment)=>({
     payload: comment
 });
 
-export const postComment = (dishId, rating, author, comment) =>(dispatch)=>{
+export const postComment = (dishId, rating, author, comment) => (dispatch) =>{
 
     const newComment = {
         dishId: dishId,
@@ -41,7 +41,7 @@ export const postComment = (dishId, rating, author, comment) =>(dispatch)=>{
             throw errmess;
         })
         .then(response => response.json())
-        .then(response => dispatch(postComment(response)))
+        .then(response => dispatch(addComment(response)))
         .catch(error => { console.log('Post comments', error.message)
               alert('Your comment could not be posted\n Error: '+ error.message)})
     }
